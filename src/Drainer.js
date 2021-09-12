@@ -1,28 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import BreakBar from "./BreakBar";
 import CompletedDots from "./CompletedDots";
-import DrainBar2 from "./DrainBar";
+import DrainBar from "./DrainBar";
 
-const DrainBar = styled.div`
-  width: 100%;
-  // background-color: blue;
-  background: #134e5e; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to bottom,
-    #71b280,
-    #134e5e
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #71b280,
-    #134e5e
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  height: ${(props) => props.height}%;
-  position: absolute;
-  bottom: 0;
-  z-index: -1;
-`;
 const StyledButton = styled.button`
   background: none;
   border: none;
@@ -57,9 +38,9 @@ const GridContainer = styled.div`
   z-index: 2;
 `;
 
-export const Drainer = ({ minutes, breakMinutes = 2 }) => {
-  const timerInSeconds = minutes * 6;
-  const breakInSeconds = breakMinutes * 6;
+export const Drainer = ({ minutes = 25, breakMinutes = 5 }) => {
+  const timerInSeconds = minutes * 60;
+  const breakInSeconds = breakMinutes * 60;
 
   const [seconds, setSeconds] = useState(timerInSeconds);
   const [breakSeconds, setBreakSeconds] = useState(0);
@@ -124,16 +105,13 @@ export const Drainer = ({ minutes, breakMinutes = 2 }) => {
           totalSeconds={breakInSeconds}
         />
       ) : (
-        <DrainBar2
+        <DrainBar
           isActive={isActive}
           minutes={minutes}
           seconds={seconds}
           totalSeconds={timerInSeconds}
         />
       )}
-      {/* <DrainBar height={(seconds / (isBreak ? breakInSeconds : timerInSeconds)) * 100} isBreak /> */}
-      {/* <DrainBar2 isActive={isActive} minutes={minutes} complete={completePom} /> */}
-      {/* <StyledButton onClick={toggle}>{`${isActive ? 'Pause' : 'Start'} ${periodName}`}</StyledButton> */}
       {isActive ? (
         <StyledButton onClick={() => console.log("pause")}>
           {isBreak ? breakInSeconds - breakSeconds : seconds}
@@ -143,7 +121,7 @@ export const Drainer = ({ minutes, breakMinutes = 2 }) => {
           {isBreak ? "Start Break" : "Start"}
         </StyledButton>
       )}
-      <CompletedDots countCompleted={countOfCompleted + 19} />
+      <CompletedDots countCompleted={countOfCompleted} />
     </GridContainer>
   );
 };

@@ -22,8 +22,8 @@ const Bar = styled.div`
   transition: height 1s linear;
 `;
 
-const DrainBar2 = ({ seconds, totalSeconds, isActive }) => (
+const DrainBar = ({ seconds, totalSeconds, isActive }) => (
   <Bar height={isActive ? ((seconds - 1) / totalSeconds) * 100 : 100} />
 );
 
-export default DrainBar2;
+export default DrainBar;

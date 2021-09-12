@@ -42,7 +42,7 @@ const BG = styled.div`
 
 const App = () => (
   <BG>
-    <Drainer minutes={1} />
+    <Drainer minutes={25} breakMinutes={5} />
   </BG>
 );
 
