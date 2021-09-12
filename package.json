@@ -1,0 +1,23 @@
+{
+  "name": "pomodo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.3.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-react": "^7.14.5",
+    "parcel-bundler": "^1.12.5",
+    "prettier": "2.4.0"
+  },
+  "scripts": {
+    "start": "parcel index.html --open"
+  },
+  "resolutions": {
+    "styled-components": "^5"
+  }
+}
