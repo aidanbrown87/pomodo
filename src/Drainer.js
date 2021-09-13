@@ -3,6 +3,7 @@ import styled from "styled-components";
 import BreakBar from "./BreakBar";
 import CompletedDots from "./CompletedDots";
 import DrainBar from "./DrainBar";
+import { secondsDisplayAsMinutes } from "./Minutes";
 
 const StyledButton = styled.button`
   background: none;
@@ -114,7 +115,9 @@ export const Drainer = ({ minutes = 25, breakMinutes = 5 }) => {
       )}
       {isActive ? (
         <StyledButton onClick={() => console.log("pause")}>
-          {isBreak ? breakInSeconds - breakSeconds : seconds}
+          {secondsDisplayAsMinutes(
+            isBreak ? breakInSeconds - breakSeconds : seconds
+          )}
         </StyledButton>
       ) : (
         <StyledButton onClick={isBreak ? handleStartBreak : handleStartPom}>
