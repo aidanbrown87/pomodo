@@ -48,11 +48,13 @@ export const Drainer = ({ minutes = 25, breakMinutes = 5 }) => {
   const [isBreak, setIsBreak] = useState(false);
   const [countOfCompleted, setCount] = useState(0);
   const [intervalID, setIntervalID] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   function handleStartPom() {
     if (intervalID) {
       clearInterval(intervalID);
       setIntervalID(0);
+      setIsPaused(false);
     }
 
     const newIntervalID = setInterval(() => {
@@ -65,6 +67,7 @@ export const Drainer = ({ minutes = 25, breakMinutes = 5 }) => {
     if (intervalID) {
       clearInterval(intervalID);
       setIntervalID(0);
+      setIsPaused(false);
     }
 
     const newIntervalID = setInterval(() => {
@@ -94,6 +97,15 @@ export const Drainer = ({ minutes = 25, breakMinutes = 5 }) => {
     setIsBreak(!isBreak);
   };
 
+  const handlePaused = () => {
+    if (isPaused) {
+      isBreak ? handleStartBreak() : handleStartPom();
+    } else {
+      clearInterval(intervalID);
+      setIsPaused(true);
+    }
+  };
+
   const isActive = !!intervalID;
 
   return (
@@ -113,8 +125,8 @@ export const Drainer = ({ minutes = 25, breakMinutes = 5 }) => {
           totalSeconds={timerInSeconds}
         />
       )}
-      {isActive ? (
-        <StyledButton onClick={() => console.log("pause")}>
+      {isActive || isPaused ? (
+        <StyledButton onClick={handlePaused}>
           {secondsDisplayAsMinutes(
             isBreak ? breakInSeconds - breakSeconds : seconds
           )}
