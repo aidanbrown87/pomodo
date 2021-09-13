@@ -1,9 +1,25 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import BreakBar from "./BreakBar";
 import CompletedDots from "./CompletedDots";
 import DrainBar from "./DrainBar";
 import { secondsDisplayAsMinutes } from "./Minutes";
+
+const pulse = keyframes`
+  0% {
+    transform: scale(0.9);
+  }
+
+  70% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+`;
 
 const StyledButton = styled.button`
   background: none;
@@ -17,6 +33,11 @@ const StyledButton = styled.button`
   font-size: 2em;
   font-family: system-ui;
   font-weight: 100;
+  ${({ isPaused }) =>
+    isPaused &&
+    css`
+      animation: ${pulse} 1s linear infinite;
+    `}
 `;
 
 const GridContainer = styled.div`
@@ -126,7 +147,7 @@ export const Drainer = ({ minutes = 25, breakMinutes = 5 }) => {
         />
       )}
       {isActive || isPaused ? (
-        <StyledButton onClick={handlePaused}>
+        <StyledButton onClick={handlePaused} isPaused={isPaused}>
           {secondsDisplayAsMinutes(
             isBreak ? breakInSeconds - breakSeconds : seconds
           )}
